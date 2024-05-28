@@ -16,3 +16,5 @@ async function validateBlogPost(blogPost) {
 
   return value;
 }
+
+module.exports = { validateBlogPost };

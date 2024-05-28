@@ -6,7 +6,9 @@ async function createBlogPost(blogPost) {
   const validatedBlogPost = await validator.validateBlogPost(blogPost);
 
   // Save the blog post to the database
-  await databaseRepository.saveBlogPost(validatedBlogPost);
+  const result = await databaseRepository.saveBlogPost(validatedBlogPost);
 
   return result;
 }
+
+module.exports = { createBlogPost };
