@@ -1,8 +1,29 @@
 var MongoClient = require("mongodb").MongoClient;
-var url = "mongodb://localhost:27017/mydb";
+const { config } = require("../config.js");
 
-MongoClient.connect(url, function (err, db) {
-  if (err) throw err;
-  console.log("Database created!");
-  db.close();
-});
+async function connect(url) {
+  // Create a new MongoClient and connect to it
+  const client = await MongoClient.connect(url, { useUnifiedTopology: true });
+
+  // Get the database and collection
+  const db = client.db("blogdb");
+  const collection = db.collection("blogposts");
+
+  // Return the client and collection
+  return { client, collection };
+}
+
+async function saveBlogPost(blogPost) {
+  // Connect to the database
+  const { client, collection } = await connect(config.dbConnectionString);
+
+  // Insert the blog post into the collection
+  const result = await collection.insertOne(blogPost);
+
+  // Close the connection
+  client.close();
+
+  return result;
+}
+
+module.exports = { saveBlogPost };
