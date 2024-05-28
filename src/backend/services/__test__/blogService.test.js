@@ -92,5 +92,23 @@ describe("blogService", () => {
         insertedId: "someGeneratedObjectId123",
       });
     });
+
+    it("should return the result of the databaseRepository.createBlogPost with ingress missing (as it's optional)", async () => {
+      // Arrange
+      const blogPost = {
+        title: "title",
+        content: "content",
+        tags: ["tag1", "tag2"],
+      };
+
+      // Act
+      const result = await sut.createBlogPost(blogPost);
+
+      // Assert
+      expect(result).toEqual({
+        acknowledged: true,
+        insertedId: "someGeneratedObjectId123",
+      });
+    });
   });
 });
