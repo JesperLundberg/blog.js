@@ -3,7 +3,7 @@ const { config } = require("../config.js");
 
 async function connect(url) {
   // Create a new MongoClient and connect to it
-  const client = await MongoClient.connect(url, { useUnifiedTopology: true });
+  const client = await MongoClient.connect(url);
 
   // Get the database and collection
   const db = client.db("blogdb");

@@ -6,25 +6,18 @@ const blogService = require("../services/blogService.js");
 
 /**
  */
-routes.post("/create", async (req, res, next) => {
+routes.post("/create", async (req, res, _) => {
   try {
-    req.body; // Here is the posted info from the client
+    const result = await blogService.createBlogPost(req.body);
 
-    // blogService.createBlogPost(req.body);
-
-    // Strip any leading/trailing whitespace from the path read from the query string
-    // const fullFilePath = req.query.path.trim();
-    // Set the correct mime type for the file
-    // res.header("Content-Type", "application/epub+zip");
-    // res.download(fullFilePath);
-
-    return res.json({ message: req.body });
+    return res.status(200).json({ message: result });
   } catch (error) {
     console.error(
       "An error occurred when trying to create blogpost",
       error.message,
     );
-    next(error);
+
+    res.status(500).json({ message: error.message });
   }
 });
 
