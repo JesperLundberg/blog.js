@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 
 const create = require("./routes/create.js");
+const read = require("./routes/read.js");
 
 const app = express();
 const port = 3000;
@@ -20,6 +21,8 @@ app.get("/", (_, res) => {
 });
 
 app.post("/create", create.routes);
+
+app.get("/read/all", read.routes);
 
 app.use((err, _, res, _1) => {
   const statusCode = err.statusCode || 500;
