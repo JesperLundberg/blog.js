@@ -3,6 +3,7 @@ const sut = require("../blogService.js");
 // mocking databaseRepository module
 jest.mock("../../repositories/databaseRepository", () => ({
   saveBlogPost: jest.fn(),
+  getAllBlogPosts: jest.fn(),
 }));
 
 describe("blogService", () => {
@@ -15,16 +16,16 @@ describe("blogService", () => {
     jest.clearAllMocks();
   });
 
-  // mocking databaseRepository.saveBlogPost
-  databaseRepository.saveBlogPost.mockImplementation((blogPost) => {
-    // Simulate the asynchronous nature of saveBlogPost
-    return Promise.resolve({
-      acknowledged: true,
-      insertedId: "someGeneratedObjectId123",
-    });
-  });
-
   describe("createBlogPost", () => {
+    // mocking databaseRepository.saveBlogPost
+    databaseRepository.saveBlogPost.mockImplementation((blogPost) => {
+      // Simulate the asynchronous nature of saveBlogPost
+      return Promise.resolve({
+        acknowledged: true,
+        insertedId: "someGeneratedObjectId123",
+      });
+    });
+
     it("should throw an error if the blogpost is empty", async () => {
       // Assert
       await expect(sut.createBlogPost("")).rejects.toThrow(
@@ -109,6 +110,68 @@ describe("blogService", () => {
         acknowledged: true,
         insertedId: "someGeneratedObjectId123",
       });
+    });
+  });
+
+  describe("getAllBlogPosts", () => {
+    it("should return the result of the databaseRepository.getAllBlogPosts", async () => {
+      // Arrange
+      // mocking databaseRepository.getAllBlogPosts
+      databaseRepository.getAllBlogPosts.mockImplementation(() => {
+        // Simulate the asynchronous nature of getAllBlogPosts
+        return Promise.resolve([
+          {
+            _id: "6655c79807143ec3938819a4",
+            title: "first blog post",
+            ingress: "Some ingress",
+            content: "Some content",
+            tags: ["tag1", "tag2"],
+          },
+          {
+            _id: "6655c79807143ec3938819a5",
+            title: "second blog post",
+            ingress: "Some ingress in the second blog post",
+            content: "Some content in the second blog post",
+            tags: ["tag2", "tag3"],
+          },
+        ]);
+      });
+
+      // Act
+      const result = await sut.getAllBlogPosts();
+
+      // Assert
+      expect(result).toEqual([
+        {
+          _id: "6655c79807143ec3938819a4",
+          title: "first blog post",
+          ingress: "Some ingress",
+          content: "Some content",
+          tags: ["tag1", "tag2"],
+        },
+        {
+          _id: "6655c79807143ec3938819a5",
+          title: "second blog post",
+          ingress: "Some ingress in the second blog post",
+          content: "Some content in the second blog post",
+          tags: ["tag2", "tag3"],
+        },
+      ]);
+    });
+
+    it("should return an empty array if there are no blog posts", async () => {
+      // Arrange
+      // mocking databaseRepository.getAllBlogPosts
+      databaseRepository.getAllBlogPosts.mockImplementation(() => {
+        // Simulate the asynchronous nature of getAllBlogPosts
+        return Promise.resolve([]);
+      });
+
+      // Act
+      const result = await sut.getAllBlogPosts();
+
+      // Assert
+      expect(result).toEqual([]);
     });
   });
 });

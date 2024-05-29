@@ -26,4 +26,20 @@ async function saveBlogPost(blogPost) {
   return result;
 }
 
-module.exports = { saveBlogPost };
+async function getAllBlogPosts() {
+  // Connect to the database
+  const { client, collection } = await connect(config.dbConnectionString);
+
+  // Find all blog posts
+  const result = await collection.find({}).toArray();
+
+  // Close the connection
+  client.close();
+
+  return result;
+}
+
+module.exports = {
+  saveBlogPost,
+  getAllBlogPosts,
+};

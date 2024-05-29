@@ -15,4 +15,18 @@ async function createBlogPost(blogPost) {
   }
 }
 
-module.exports = { createBlogPost };
+async function getAllBlogPosts() {
+  try {
+    // Get all blog posts from the database
+    const result = await databaseRepository.getAllBlogPosts();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = {
+  createBlogPost,
+  getAllBlogPosts: getAllBlogPosts,
+};
