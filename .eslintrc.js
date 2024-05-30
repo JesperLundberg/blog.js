@@ -7,7 +7,8 @@ module.exports = {
     "plugin:import/errors",
     "plugin:import/warnings",
     "airbnb-base",
-    "prettier",
+    // "prettier",
+    "plugin:prettier/recommended",
   ],
   parserOptions: {
     ecmaVersion: 2023, // Updated to the latest ECMAScript version
