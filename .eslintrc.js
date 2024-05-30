@@ -3,7 +3,12 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: ["plugin:import/errors", "plugin:import/warnings", "airbnb-base"],
+  extends: [
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "airbnb-base",
+    "prettier",
+  ],
   parserOptions: {
     ecmaVersion: 2023, // Updated to the latest ECMAScript version
     sourceType: "module",
