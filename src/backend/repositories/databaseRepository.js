@@ -1,5 +1,5 @@
-var MongoClient = require("mongodb").MongoClient;
-const { config } = require("../config.js");
+const { MongoClient } = require("mongodb");
+const { config } = require("../config");
 
 async function connect(url) {
   // Create a new MongoClient and connect to it

@@ -1,4 +1,4 @@
-const sut = require("../blogService.js");
+const sut = require("../blogService");
 
 // mocking databaseRepository module
 jest.mock("../../repositories/databaseRepository", () => ({
@@ -18,7 +18,7 @@ describe("blogService", () => {
 
   describe("createBlogPost", () => {
     // mocking databaseRepository.saveBlogPost
-    databaseRepository.saveBlogPost.mockImplementation((blogPost) => {
+    databaseRepository.saveBlogPost.mockImplementation((_) => {
       // Simulate the asynchronous nature of saveBlogPost
       return Promise.resolve({
         acknowledged: true,

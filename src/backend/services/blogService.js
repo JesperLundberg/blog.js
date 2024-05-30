@@ -1,32 +1,24 @@
-const databaseRepository = require("../repositories/databaseRepository.js");
-const validator = require("../validators/blogPostValidator.js");
+const databaseRepository = require("../repositories/databaseRepository");
+const validator = require("../validators/blogPostValidator");
 
 async function createBlogPost(blogPost) {
-  try {
-    // Validate the blog post
-    const validatedBlogPost = await validator.validateBlogPost(blogPost);
+  // Validate the blog post
+  const validatedBlogPost = await validator.validateBlogPost(blogPost);
 
-    // Save the blog post to the database
-    const result = await databaseRepository.saveBlogPost(validatedBlogPost);
+  // Save the blog post to the database
+  const result = await databaseRepository.saveBlogPost(validatedBlogPost);
 
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return result;
 }
 
 async function getAllBlogPosts() {
-  try {
-    // Get all blog posts from the database
-    const result = await databaseRepository.getAllBlogPosts();
+  // Get all blog posts from the database
+  const result = await databaseRepository.getAllBlogPosts();
 
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return result;
 }
 
 module.exports = {
   createBlogPost,
-  getAllBlogPosts: getAllBlogPosts,
+  getAllBlogPosts,
 };

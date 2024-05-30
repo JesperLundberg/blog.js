@@ -1,8 +1,8 @@
 const cors = require("cors");
 const express = require("express");
 
-const create = require("./routes/create.js");
-const read = require("./routes/read.js");
+const create = require("./routes/create");
+const read = require("./routes/read");
 
 const app = express();
 const port = 3000;
@@ -28,7 +28,6 @@ app.use((err, _, res, _1) => {
   const statusCode = err.statusCode || 500;
   console.error(err.message, err.stack);
   res.status(statusCode).json({ message: err.message });
-  return;
 });
 
 app.listen(port, () => {
