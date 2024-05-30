@@ -2,7 +2,7 @@ const express = require("express");
 
 const routes = express.Router();
 
-const blogService = require("../services/blogService.js");
+const blogService = require("../services/blogService");
 
 /**
  */
@@ -10,7 +10,7 @@ routes.post("/create", async (req, res, _) => {
   try {
     const result = await blogService.createBlogPost(req.body);
 
-    return res.status(200).json({ message: result });
+    res.status(200).json({ message: result });
   } catch (error) {
     console.error(
       "An error occurred when trying to create blogpost",
