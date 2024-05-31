@@ -4,6 +4,7 @@ const sut = require("../blogService");
 jest.mock("../../repositories/databaseRepository", () => ({
   saveBlogPost: jest.fn(),
   getAllBlogPosts: jest.fn(),
+  updateBlogPost: jest.fn(),
 }));
 
 describe("blogService", () => {
@@ -172,6 +173,24 @@ describe("blogService", () => {
 
       // Assert
       expect(result).toEqual([]);
+    });
+  });
+
+  describe("updateBlogPost", () => {
+    // mocking databaseRepository.saveBlogPost
+    databaseRepository.updateBlogPost.mockImplementation((blogPost) => {
+      // Simulate the asynchronous nature of saveBlogPost
+      return Promise.resolve({
+        acknowledged: true,
+        insertedId: blogPost.id,
+      });
+    });
+
+    it("should throw an error if the blogpost is empty", async () => {
+      // Assert
+      await expect(sut.updateBlogPost("")).rejects.toThrow(
+        'Invalid blog post: "value" must be of type object',
+      );
     });
   });
 });
