@@ -1,11 +1,13 @@
 ---
+import { MASTODON_URL, GITHUB_URL } from "../consts"
+
 const today = new Date();
 ---
 
 <footer>
 	&copy; {today.getFullYear()} Jesper Lundberg. All rights reserved.
 	<div class="social-links">
-    <a href="https://mastodon.nu/@jesperlundberg" target="_blank">
+    <a href={MASTODON_URL} target="_blank">
 			<span class="sr-only">Follow Jesper on Mastodon</span>
 			<svg
 				viewBox="0 0 16 16"
@@ -19,7 +21,7 @@ const today = new Date();
 				></path></svg
 			>
 		</a>
-		<a href="https://github.com/jesperlundberg" target="_blank">
+    <a href={GITHUB_URL} target="_blank">
 			<span class="sr-only">Go to Jesper's GitHub repo</span>
 			<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github"
 				><path
