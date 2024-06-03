@@ -1,9 +1,13 @@
 const databaseRepository = require("../repositories/databaseRepository");
 const validator = require("../validators/blogPostValidator");
+const { v4: uuidv4 } = require("uuid");
 
 async function createBlogPost(blogPost) {
   // Validate the blog post
   const validatedBlogPost = await validator.validateCreateBlogPost(blogPost);
+
+  // Generate a unique id for the blog post
+  validatedBlogPost.id = uuidv4().replace(/-/g, "");
 
   // Save the blog post to the database
   const result = await databaseRepository.saveBlogPost(validatedBlogPost);
