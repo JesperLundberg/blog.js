@@ -1,4 +1,4 @@
-const { MongoClient, ObjectId } = require("mongodb");
+const { MongoClient } = require("mongodb");
 const { config } = require("../config");
 
 async function connect(url) {
@@ -35,7 +35,7 @@ async function getAllBlogPosts() {
   // Find all blog posts
   const result = await collection.find({}).toArray();
 
-  // FIXME: Maybe not send the entire content of the blog post to cut down on the amount of data sent
+  // FIXME: Don't not send the entire content of the blog post to lessen the payload
 
   // Close the connection
   client.close();
@@ -49,7 +49,7 @@ async function getBlogPostById(id) {
 
   // Find the blog post by id
   const result = await collection.findOne({
-    id: id,
+    id,
   });
 
   // Close the connection

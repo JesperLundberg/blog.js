@@ -1,6 +1,7 @@
+const { v4: uuidv4 } = require("uuid");
+
 const databaseRepository = require("../repositories/databaseRepository");
 const validator = require("../validators/blogPostValidator");
-const { v4: uuidv4 } = require("uuid");
 
 async function createBlogPost(blogPost) {
   // Validate the blog post
