@@ -3,6 +3,7 @@ const express = require("express");
 
 const create = require("./routes/create");
 const read = require("./routes/read");
+const update = require("./routes/update");
 
 const app = express();
 const port = 3000;
@@ -22,7 +23,10 @@ app.get("/", (_, res) => {
 
 app.post("/create", create.routes);
 
+app.post("/update/", update.routes);
+
 app.get("/read/all", read.routes);
+app.get("/read/:id", read.routes);
 
 app.use((err, _, res, _1) => {
   const statusCode = err.statusCode || 500;
