@@ -8,36 +8,38 @@ async function createBlogPost(blogPost) {
   const validatedBlogPost = await validator.validateCreateBlogPost(blogPost);
 
   // Generate a unique id for the blog post
-  validatedBlogPost.id = uuidv4().replace(/-/g, "");
+  validatedBlogPost.id = uuidv4();
+
+  // Set the date of the blog post
+  validatedBlogPost.createdDate = new Date().toISOString();
+  validatedBlogPost.modifiedDate = new Date().toISOString();
 
   // Save the blog post to the database
-  const result = await databaseRepository.saveBlogPost(validatedBlogPost);
-
-  return result;
+  return await databaseRepository.saveBlogPost(validatedBlogPost);
 }
 
 async function updateBlogPost(blogPost) {
   // Validate the blog post
   const validatedBlogPost = await validator.validateUpdateBlogPost(blogPost);
 
-  // Update the blog post in the database
-  const result = await databaseRepository.saveBlogPost(validatedBlogPost);
+  // Update the modified date of the blog post
+  validatedBlogPost.modifiedDate = new Date().toISOString();
 
-  return result;
+  // Update the blog post in the database
+  return await databaseRepository.saveBlogPost(validatedBlogPost);
 }
 
 async function getAllBlogPosts() {
   // Get all blog posts from the database
-  const result = await databaseRepository.getAllBlogPosts();
-
-  return result;
+  return await databaseRepository.getAllBlogPosts();
 }
 
 async function getBlogPostById(id) {
-  // Get a blog post by id from the database
-  const result = await databaseRepository.getBlogPostById(id);
+  // Validate the id
+  const validatedId = await validator.validateId(id);
 
-  return result;
+  // Get a blog post by id from the database
+  return await databaseRepository.getBlogPostById(validatedId);
 }
 
 module.exports = {

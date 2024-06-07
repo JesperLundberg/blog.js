@@ -10,6 +10,15 @@ async function validateSchema(blogPost, schema) {
   return value;
 }
 
+async function validateId(id) {
+  // create a schema that validates the id to be an uuid
+  const schema = joi.string().guid({ version: "uuidv4" }).required();
+
+  const value = await validateSchema(id, schema);
+
+  return value;
+}
+
 async function validateCreateBlogPost(blogPost) {
   const schema = joi.object({
     title: joi.string().trim().empty().required(),
@@ -37,4 +46,8 @@ async function validateUpdateBlogPost(blogPost) {
   return value;
 }
 
-module.exports = { validateCreateBlogPost, validateUpdateBlogPost };
+module.exports = {
+  validateCreateBlogPost,
+  validateId,
+  validateUpdateBlogPost,
+};
